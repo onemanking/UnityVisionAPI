@@ -11,8 +11,8 @@ namespace VisionAPI
 	{
 		private const string _API = "https://vision.googleapis.com/v1/images:annotate?key=";
 
-		public VisionAPIManager Instance { get { return _instance; } }
-		private VisionAPIManager _instance;
+		public static VisionAPIManager Instance { get { return _instance; } }
+		private static VisionAPIManager _instance;
 
 		[SerializeField] public string m_Key = "INPUT YOUR KEY";
 		[SerializeField] public List<Feature> m_FeatureList;
@@ -33,9 +33,9 @@ namespace VisionAPI
 
 		private void Awake() => _instance = this.GetComponent<VisionAPIManager>();
 
-		public IObservable<List<FaceAnnotation>> SendImageAsObservable(Texture2D _image)
+		public IObservable<List<Response>> SendImageAsObservable(Texture2D _image)
 		{
-			return Observable.Create<List<FaceAnnotation>>
+			return Observable.Create<List<Response>>
 			(
 				_observer =>
 				{
@@ -65,7 +65,7 @@ namespace VisionAPI
 							_json =>
 							{
 								Debug.LogWarning("Vision API Res : " + _json);
-								_observer.OnNext(JsonUtility.FromJson<CallbackData>(_json).responses[0].faceAnnotations);
+								_observer.OnNext(JsonUtility.FromJson<CallbackData>(_json).responses);
 								_observer.OnCompleted();
 							},
 							_error => Debug.LogError(_error.Message),
