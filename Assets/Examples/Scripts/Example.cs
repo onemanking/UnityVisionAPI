@@ -10,7 +10,6 @@ using UnityEngine.UI;
 public class Example : MonoBehaviour
 {
 	[SerializeField] private RawImage m_RawImage;
-	[SerializeField] private Image m_Image;
 	[SerializeField] private Button m_SendImageButton;
 
 	private IDisposable m_Disposable;
