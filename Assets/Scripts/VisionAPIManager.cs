@@ -14,8 +14,8 @@ namespace VisionAPI
 		public static VisionAPIManager Instance { get { return _instance; } }
 		private static VisionAPIManager _instance;
 
-		[SerializeField] public string m_Key = "INPUT YOUR KEY";
-		[SerializeField] public List<Feature> m_FeatureList;
+		[SerializeField] private string m_Key = "INPUT YOUR KEY";
+		[SerializeField] private List<Feature> m_FeatureList;
 
 		public enum FeatureType
 		{
