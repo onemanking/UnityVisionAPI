@@ -71,7 +71,6 @@ namespace VisionAPI
 							_error =>
 							{
 								_observer.OnError(_error);
-								Debug.LogError(_error.Message);
 							},
 							_observer.OnCompleted
 						);

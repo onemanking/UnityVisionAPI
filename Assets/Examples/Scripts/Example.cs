@@ -28,6 +28,10 @@ public class Example : MonoBehaviour
 						.Subscribe(_faceRects =>
 						{
 							Debug.Log("faces detected : " + _faceRects.Count);
+						},
+						_exception =>
+						{
+							Debug.LogError(_exception);
 						}).AddTo(this);
 				}
 			).AddTo(this);
@@ -54,7 +58,6 @@ public class Example : MonoBehaviour
 						_error =>
 						{
 							_observer.OnError(_error);
-							Debug.LogError(_error.Message);
 						},
 						_observer.OnCompleted
 					);
