@@ -51,7 +51,11 @@ public class Example : MonoBehaviour
 							_observer.OnNext(rects);
 							_observer.OnCompleted();
 						},
-						_error => Debug.LogError(_error.Message),
+						_error =>
+						{
+							_observer.OnError(_error);
+							Debug.LogError(_error.Message);
+						},
 						_observer.OnCompleted
 					);
 				return Disposable.Create(() => sendImageObservable.Dispose());

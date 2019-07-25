@@ -68,7 +68,11 @@ namespace VisionAPI
 								_observer.OnNext(JsonUtility.FromJson<CallbackData>(_json).responses);
 								_observer.OnCompleted();
 							},
-							_error => Debug.LogError(_error.Message),
+							_error =>
+							{
+								_observer.OnError(_error);
+								Debug.LogError(_error.Message);
+							},
 							_observer.OnCompleted
 						);
 					return Disposable.Create(() => postObservable.Dispose());
