@@ -141,7 +141,7 @@ namespace VisionAPI
 		}
 		#endregion
 
-		#region	Response data
+		#region	Response Data
 		[Serializable]
 		public struct CallbackData
 		{
@@ -151,10 +151,42 @@ namespace VisionAPI
 		[Serializable]
 		public struct Response
 		{
+			public CropHintsAnnotation cropHintsAnnotation;
 			public List<FaceAnnotation> faceAnnotations;
-			// public List<ImagePropertiesAnnotation> imagePropertiesAnnotation;
+			public ImagePropertiesAnnotation imagePropertiesAnnotation;
+			public List<LabelAnnotations> labelAnnotations;
+			public List<LocalizedObjectAnnotations> localizedObjectAnnotations;
+			public SafeSearchAnnotation SafeSearchAnnotation;
+			public List<WebDetection> webDetection;
 		}
 
+		#region Sharing Data
+		[Serializable]
+		public struct BoundingPoly
+		{
+			public List<Vertex> vertices;
+
+			public Rect ConvertToRect() => new Rect(x: vertices[0].x, y: vertices[0].y, width: vertices[2].x - vertices[0].x, height: vertices[2].y - vertices[0].y);
+		}
+
+		[Serializable]
+		public class CropHints
+		{
+			public BoundingPoly boundingPoly;
+			public float confidence;
+			public float importantFraction;
+		}
+		#endregion Sharing Data
+
+		#region Crop Hints Annotation
+		[Serializable]
+		public struct CropHintsAnnotation
+		{
+			public List<CropHints> cropHints;
+		}
+		#endregion Crop Hints Annotation
+
+		#region Face Annotation
 		[Serializable]
 		public struct FaceAnnotation
 		{
@@ -175,13 +207,6 @@ namespace VisionAPI
 			public string headwearLikelihood;
 		}
 
-		[Serializable]
-		public struct BoundingPoly
-		{
-			public List<Vertex> vertices;
-
-			public Rect ConvertToRect() => new Rect(x: vertices[0].x, y: vertices[0].y, width: vertices[2].x - vertices[0].x, height: vertices[2].y - vertices[0].y);
-		}
 
 		[Serializable]
 		public struct Vertex
@@ -250,6 +275,93 @@ namespace VisionAPI
 
 			public Vector3 ConvertToVector3() => new Vector3(x, y, z);
 		}
-		#endregion
+		#endregion Face Annotation
+
+		#region Image Properties Annotation
+		[Serializable]
+		public struct ImagePropertiesAnnotation
+		{
+			public List<CropHints> cropHints;
+			public DominantColors dominantColors;
+		}
+
+		[Serializable]
+		public struct DominantColors
+		{
+			public List<Colors> colors;
+		}
+
+		[Serializable]
+		public struct Colors
+		{
+			public Color color;
+			public string hex;
+			public float percent;
+			public int percentRounded;
+			public float pixelFraction;
+			public float score;
+		}
+
+		[Serializable]
+		public struct Color
+		{
+			public int blue;
+			public int green;
+			public int red;
+
+			public UnityEngine.Color ConvertToUnityColor() => new UnityEngine.Color(red, green, blue);
+		}
+		#endregion Image Properties Annotation
+
+		#region Label Annotation
+		[Serializable]
+		public struct LabelAnnotations
+		{
+			public string description;
+			public string mid;
+			public float score;
+			public float topicality;
+		}
+		#endregion Label Annotation
+
+		#region Localized Object Annotation
+		[Serializable]
+		public struct LocalizedObjectAnnotations
+		{
+			public List<LocalizedBoundingPoly> boundingPoly;
+			public string mid;
+			public string name;
+			public float score;
+		}
+
+		[Serializable]
+		public struct LocalizedBoundingPoly
+		{
+			public List<Vertex> normalizedVertices;
+		}
+		#endregion Localized Object Annotation
+
+		#region Safe Search Annotation
+		[Serializable]
+		public struct SafeSearchAnnotation
+		{
+			/// <summary>
+			/// TODO
+			/// </summary>
+		}
+		#endregion Safe Search Annotation
+
+		#region Web Annotation
+		[Serializable]
+		public struct WebDetection
+		{
+
+			/// <summary>
+			/// TODO
+			/// </summary>
+		}
+		#endregion Web Annotation
+
+		#endregion Response Data
 	}
 }
