@@ -195,8 +195,7 @@ namespace VisionAPI
 		[Serializable]
 		public struct Landmark
 		{
-			[JsonConverter(typeof(StringEnumConverter))]
-			public LandmarkType type;
+			public string type;
 			public Position position;
 		}
 
